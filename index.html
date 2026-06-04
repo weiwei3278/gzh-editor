@@ -19,9 +19,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 .tab.active{color:var(--text);border-bottom-color:var(--accent);font-weight:600}
 .panel{display:none;flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px}
 .panel.active{display:block}
-#editor{width:100%;min-height:200px;border:none;outline:none;font-size:15px;line-height:1.8;font-family:inherit;resize:none;background:transparent;color:var(--text);padding:0}
+#editor{width:100%;flex:1;min-height:300px;border:none;outline:none;font-size:15px;line-height:1.8;font-family:inherit;resize:none;background:transparent;color:var(--text);padding:0;-webkit-overflow-scrolling:touch}
 #editor::placeholder{color:#ccc}
-.toolbar{display:flex;gap:4px;padding-bottom:10px;flex-wrap:wrap;border-bottom:1px solid var(--border);margin-bottom:10px}
+.toolbar{display:flex;gap:4px;padding-bottom:10px;flex-wrap:wrap;border-bottom:1px solid var(--border);margin-bottom:10px;flex-shrink:0}
 .toolbar button{padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:var(--card);font-size:11px;cursor:pointer;color:var(--text);white-space:nowrap;transition:.15s;-webkit-tap-highlight-color:transparent}
 .toolbar button:active{background:#f0f0f0}
 .toolbar .tb-sep{width:1px;background:var(--border);margin:2px 2px}
@@ -101,7 +101,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
   <div class="tab" data-p="preview">预览</div>
 </div>
 
-<div class="panel active" id="panel-edit">
+<div class="panel active" id="panel-edit" style="display:flex;flex-direction:column">
   <div class="toolbar" id="toolbar"></div>
   <textarea id="editor" placeholder="在此创作…
 
