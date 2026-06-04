@@ -7,22 +7,22 @@
 <style>
 :root{--bg:#f5f5f5;--card:#fff;--text:#1a1a1a;--muted:#999;--border:#e8e8e8;--accent:#1a1a1a}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);max-width:500px;margin:0 auto;padding-top:86px;min-height:100vh}
-.hdr{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:500px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:var(--card);z-index:20}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);height:100vh;display:flex;flex-direction:column;max-width:500px;margin:0 auto;overflow:hidden}
+.hdr{padding:10px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:var(--card);z-index:10;flex-shrink:0}
 .hdr h1{font-size:16px;font-weight:700}
 .hdr .actions{display:flex;gap:4px}
 .hdr .act{width:32px;height:32px;border-radius:8px;border:none;background:transparent;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:.15s}
 .hdr .act:active{background:#f0f0f0}
-.tabs{position:fixed;top:44px;left:50%;transform:translateX(-50%);width:100%;max-width:500px;display:flex;border-bottom:1px solid var(--border);background:var(--card);z-index:20;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tabs{display:flex;border-bottom:1px solid var(--border);background:var(--card);flex-shrink:0;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .tabs::-webkit-scrollbar{display:none}
 .tab{padding:10px 14px;font-size:13px;color:var(--muted);white-space:nowrap;border-bottom:2px solid transparent;cursor:pointer;transition:.15s;flex-shrink:0}
 .tab.active{color:var(--text);border-bottom-color:var(--accent);font-weight:600}
-.panel{display:none;padding:12px;min-height:calc(100vh - 86px)}
-.panel.active{display:block}
-#panel-edit{display:flex;flex-direction:column;height:calc(100vh - 86px)}
-#editor{width:100%;flex:1;border:none;outline:none;font-size:15px;line-height:1.8;font-family:inherit;resize:none;background:transparent;color:var(--text);padding:0;-webkit-overflow-scrolling:touch}
+.panel{display:none;flex:1;overflow:hidden;min-height:0}
+.panel.active{display:flex;flex-direction:column}
+#panel-edit{overflow:hidden}
+#editor{width:100%;flex:1;min-height:0;border:none;outline:none;font-size:15px;line-height:1.8;font-family:inherit;resize:none;background:transparent;color:var(--text);padding:0 12px;-webkit-overflow-scrolling:touch;overflow-y:auto}
 #editor::placeholder{color:#ccc}
-.toolbar{display:flex;gap:4px;padding:0 0 10px;flex-wrap:wrap;border-bottom:1px solid var(--border);margin-bottom:10px;flex-shrink:0;overflow:visible}
+.toolbar{display:flex;gap:4px;padding:0 0 10px;flex-wrap:wrap;border-bottom:1px solid var(--border);margin:0 0 10px;flex-shrink:0}
 .toolbar button{padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:var(--card);font-size:11px;cursor:pointer;color:var(--text);white-space:nowrap;transition:.15s;-webkit-tap-highlight-color:transparent}
 .toolbar button:active{background:#f0f0f0}
 .toolbar .tb-sep{width:1px;background:var(--border);margin:2px 2px}
@@ -57,7 +57,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 .draft-item .d-title{font-size:14px;font-weight:600;margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .draft-item .d-meta{font-size:11px;color:var(--muted);display:flex;gap:8px}
 .draft-item .d-del{position:absolute;top:8px;right:8px;width:22px;height:22px;border-radius:11px;border:none;background:#f0f0f0;cursor:pointer;font-size:12px;color:var(--muted);display:flex;align-items:center;justify-content:center}
-#preview-wrap{background:var(--card);border-radius:12px;padding:20px 16px;min-height:60vh;word-break:break-word}
+#preview-wrap{background:var(--card);border-radius:12px;padding:20px 16px;flex:1;overflow-y:auto;word-break:break-word;-webkit-overflow-scrolling:touch}
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:100;display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .2s}
 .modal-overlay.show{opacity:1;pointer-events:auto}
 .modal-sheet{background:var(--card);width:100%;max-width:500px;margin:0 auto;border-radius:16px 16px 0 0;max-height:70vh;overflow-y:auto;transform:translateY(100%);transition:transform .25s}
@@ -114,7 +114,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 :::callout 提示 / :::quote 引用"></textarea>
 </div>
 
-<div class="panel" id="panel-style">
+<div class="panel" id="panel-style" style="overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px">
   <div class="section-label">文本样式</div>
   <div class="style-grid" id="style-grid-text"></div>
   <div class="section-label">容器模块</div>
@@ -123,11 +123,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
   <div class="style-grid" id="style-grid-decor"></div>
 </div>
 
-<div class="panel" id="panel-theme">
+<div class="panel" id="panel-theme" style="overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px">
   <div class="theme-grid" id="theme-grid"></div>
 </div>
 
-<div class="panel" id="panel-img">
+<div class="panel" id="panel-img" style="overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px">
   <div class="img-actions">
     <button class="primary" id="btn-gen-img">AI 生成配图</button>
     <button id="btn-upload-img">上传图片</button>
@@ -135,14 +135,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
   <div class="img-grid" id="img-grid"></div>
 </div>
 
-<div class="panel" id="panel-draft">
+<div class="panel" id="panel-draft" style="overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px">
   <button id="btn-new-draft" style="width:100%;padding:12px;border-radius:8px;border:1px dashed var(--border);background:var(--card);cursor:pointer;font-size:13px;color:var(--muted);margin-bottom:12px">+ 新建草稿</button>
   <div id="draft-list"></div>
 </div>
 
-<div class="panel" id="panel-preview">
+<div class="panel" id="panel-preview" style="padding:12px">
   <div id="preview-wrap"></div>
-  <button class="btn-copy" style="width:100%;padding:14px;margin-top:16px;border-radius:10px;border:none;background:var(--accent);color:#fff;font-size:15px;font-weight:600;cursor:pointer">复制到公众号后台</button>
+  <button class="btn-copy" style="width:100%;padding:14px;margin-top:12px;border-radius:10px;border:none;background:var(--accent);color:#fff;font-size:15px;font-weight:600;cursor:pointer;flex-shrink:0">复制到公众号后台</button>
 </div>
 
 <div class="modal-overlay" id="modal">
