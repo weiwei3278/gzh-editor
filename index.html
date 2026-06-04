@@ -18,7 +18,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 .tab{padding:10px 14px;font-size:13px;color:var(--muted);white-space:nowrap;border-bottom:2px solid transparent;cursor:pointer;transition:.15s;flex-shrink:0}
 .tab.active{color:var(--text);border-bottom-color:var(--accent);font-weight:600}
 .panel{display:none;flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px}
-.panel.active{display:block}
+.panel.active{display:block}#panel-edit{display:flex;flex-direction:column}
 #editor{width:100%;flex:1;min-height:300px;border:none;outline:none;font-size:15px;line-height:1.8;font-family:inherit;resize:none;background:transparent;color:var(--text);padding:0;-webkit-overflow-scrolling:touch}
 #editor::placeholder{color:#ccc}
 .toolbar{display:flex;gap:4px;padding-bottom:10px;flex-wrap:wrap;border-bottom:1px solid var(--border);margin-bottom:10px;flex-shrink:0}
@@ -101,7 +101,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
   <div class="tab" data-p="preview">预览</div>
 </div>
 
-<div class="panel active" id="panel-edit" style="display:flex;flex-direction:column">
+<div class="panel active" id="panel-edit">
   <div class="toolbar" id="toolbar"></div>
   <textarea id="editor" placeholder="在此创作…
 
