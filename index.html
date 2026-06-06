@@ -611,11 +611,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
   }
 
   function toolbarAction(action){
+    var ta=editor;
     if(action==='clear'){
       if(!ta.value.trim()||confirm('确认清空所有内容？')){ta.value='';updatePreview();}
       return;
     }
-    var ta=editor,start=ta.selectionStart,end=ta.selectionEnd,sel=ta.value.substring(start,end),before=ta.value.substring(0,start),after=ta.value.substring(end),rep=null;
+    var start=ta.selectionStart,end=ta.selectionEnd,sel=ta.value.substring(start,end),before=ta.value.substring(0,start),after=ta.value.substring(end),rep=null;
     switch(action){case'h1':rep='# '+sel;break;case'h2':rep='## '+sel;break;case'h3':rep='### '+sel;break;case'bold':rep='**'+sel+'**';break;case'quote':rep='> '+sel;break;case'hr':rep='---';break;case'list':rep='- '+sel;break;case'link':rep='['+sel+'](url)';break;
       case'dialogue':rep=':::dialogue\n'+sel+'\n> 回复内容\n:::';break;case'timeline':rep=':::timeline\n**时间点** '+sel+'\n:::';break;case'callout':rep=':::callout tip\n'+sel+'\n:::';break}
     if(rep!==null){ta.value=before+rep+after;ta.focus();ta.selectionStart=start;ta.selectionEnd=start+rep.length}
