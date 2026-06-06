@@ -27,6 +27,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 .toolbar button:active{background:#f0f0f0}
 .toolbar .tb-sep{width:1px;background:var(--border);margin:2px 2px}
 .toolbar .tb-module{color:#07c160;border-color:#b7ebc8}
+.toolbar .tb-clear{color:#e53e3e;border-color:#fed7d7}
 .style-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
 .style-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px;cursor:pointer;transition:.15s;-webkit-tap-highlight-color:transparent}
 .style-card:active{background:#fafafa}
@@ -300,6 +301,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
   ];
 
   var toolbarBtns=[
+    {label:'清空',action:'clear',cls:'tb-clear'},
     {label:'H1',action:'h1'},{label:'H2',action:'h2'},{label:'H3',action:'h3'},
     {label:'B',action:'bold'},{label:'引用',action:'quote'},{label:'HR',action:'hr'},
     {label:'列表',action:'list'},{label:'链接',action:'link'},
@@ -609,6 +611,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
   }
 
   function toolbarAction(action){
+    if(action==='clear'){
+      if(!ta.value.trim()||confirm('确认清空所有内容？')){ta.value='';updatePreview();}
+      return;
+    }
     var ta=editor,start=ta.selectionStart,end=ta.selectionEnd,sel=ta.value.substring(start,end),before=ta.value.substring(0,start),after=ta.value.substring(end),rep=null;
     switch(action){case'h1':rep='# '+sel;break;case'h2':rep='## '+sel;break;case'h3':rep='### '+sel;break;case'bold':rep='**'+sel+'**';break;case'quote':rep='> '+sel;break;case'hr':rep='---';break;case'list':rep='- '+sel;break;case'link':rep='['+sel+'](url)';break;
       case'dialogue':rep=':::dialogue\n'+sel+'\n> 回复内容\n:::';break;case'timeline':rep=':::timeline\n**时间点** '+sel+'\n:::';break;case'callout':rep=':::callout tip\n'+sel+'\n:::';break}
